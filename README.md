@@ -1,4 +1,4 @@
 # EcoEats
 Place to create sustainability app
-# I am a retard
+# Porgz
 placeholder text
