@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="{{url_for('static', filename='ecoEats.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}" />
 </head>
 
 
@@ -20,27 +20,12 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-sm">
                 <a class="navbar-brand" href="#">
-                    <img src="{{url_for('static', filename='avatars/programmer.png')}}" class="img-fluid">
                     Hello World
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-                <div class="collapse navbar-collapse" id="navbar-items">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('home_page')}}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('portfolio_page')}}">Portfolio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('contact_page')}}">Contact</a>
-                        </li>
-                    </ul>
-                </div>
 
             </div>
         </nav>
