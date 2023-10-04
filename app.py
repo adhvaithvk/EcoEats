@@ -8,5 +8,5 @@ def home_page():
 
 @app.route("/test")
 def test():
-    return render_template('test.html')
+    return render_template('layout.html')
 
