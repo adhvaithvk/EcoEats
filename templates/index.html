@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 
+<!-- API Key: AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc -->
 {% block content %}
 
 <!-- Main Content -->
 <div class="container mt-5">
     <h1>Welcome to EcoEats</h1>
     <p>Order your favorite eco-friendly meals today!</p>
+
+    <div class="map">
+        <gmp-map center="40.12150192260742,-100.45039367675781" zoom="4" map-id="DEMO_MAP_ID"></gmp-map>
+    </div>
 
     <!-- Multi-stage form -->
     <form id="multi-stage-form">

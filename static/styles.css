@@ -100,3 +100,10 @@ h2 {
   margin: 0 5px;
 }
 
+.map {
+  height: 400px;
+}
+
+.gmp-map {
+  height: 100%;
+}
