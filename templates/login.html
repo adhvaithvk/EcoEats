@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
-      <title>Login and Registration Form in HTML | CodingNepal</title>
+      <title>Login to EcoEats</title>
       <link rel="stylesheet" href="{{url_for('static', filename='login.css')}}"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
@@ -11,10 +11,10 @@
       <div class="wrapper">
          <div class="title-text">
             <div class="title login">
-               Login Form
+               EcoEats Login
             </div>
             <div class="title signup">
-               Signup Form
+               EcoEats Signup
             </div>
          </div>
          <div class="form-container">
@@ -38,7 +38,9 @@
                   </div>
                   <div class="field btn">
                      <div class="btn-layer"></div>
-                     <input type="submit" value="Login">
+                     <a href="index.html">
+                        <input onclick="window.location.href = 'index.html';" type="submit" value="Login">
+                     </a>
                   </div>
                   <div class="signup-link">
                      Not a member? <a href="">Signup now</a>
