@@ -1,5 +1,4 @@
 # EcoEats
-Place to create sustainability app
-# Porgz
-placeholder text 
-ratuly
+A sustainable delivery website
+## Running
+Go to this website: 
