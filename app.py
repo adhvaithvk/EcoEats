@@ -8,12 +8,4 @@ def login():
 
 @app.route("/index")
 def home_page():
-    return render_template('indexNew.html')
-
-@app.route("/test")
-def test():
-    return render_template('layout.html')
-
-@app.route("/testing")
-def testing():
     return render_template('index.html')

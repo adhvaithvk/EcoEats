@@ -4,8 +4,9 @@ html {
   height: 100%;
   min-height:800px;
 }
+
 body {
-  background-image: url("background.png");
+  background-image: url("bg.png");
   background-size:cover;
   background-repeat:no-repeat;
   text-align: center;
@@ -18,7 +19,7 @@ body {
   user-select: none;
 }
 
-h1{
+h1 {
   font-weight:400;
   padding-top:0;
   margin-top:0;
@@ -55,7 +56,7 @@ h1{
 
 section {
   padding: 50px ;
-  max-width: 300px;
+  max-width: 500px;
   margin: 30px auto;
   background:white;
   background:rgba(255,255,255,0.9);
@@ -86,4 +87,14 @@ margin-top:0;
 
 #welcomeMessage {
     color: white;
+}
+
+.mapDiv {
+  min-height: 300px;
+  margin-bottom: 50px;
+}
+
+#map {
+  height: 500px;
+  width: auto;
 }
