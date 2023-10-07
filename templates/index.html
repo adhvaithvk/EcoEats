@@ -10,99 +10,25 @@
     <h1>Welcome to EcoEats</h1>
     <p>Order your favorite eco-friendly meals today!</p>
 
-    <div class="mapDiv">
-        <form id="addressForm" name="address">
-            <label for="address">Address</label>
-            <input type="text" class="mb-3" id="address" name="address" placeholder="Enter address" required>
-            <p id="autocompleteDropdown"></p>
-        </form>
-
-        <div id="map"></div>
-    </div>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc&libraries=places&callback=initAutocomplete"></script>
-    <script>
-        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-            key: "AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc",
-            v: "weekly",
-            // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
-            // Add other bootstrap parameters as needed, using camel case.
-        });
-    </script>
-
-    <script>
-        let map; 
-        let autocomplete;
-        let posMarker;
-
-        async function initMap() {
-            const { Map } = await google.maps.importLibrary("maps");
-
-            map = new Map(document.getElementById("map"), {
-                center: { lat: 39.80, lng: -98.5556199 },
-                zoom: 4,
-                mapTypeId: 'roadmap',
-                zoomControl: true,
-                mapTypeControl: false,
-                scaleControl: false,
-                streetViewControl: false,
-                fullscreenControl: false
-            });
-
-            posMarker = new google.maps.Marker({
-                map,
-                anchorPoint: new google.maps.Point(0, -29),
-            });
-            posMarker.setVisible(false);
-        }
-
-        async function initAutocomplete() {
-            autocomplete = new google.maps.places.Autocomplete(
-                document.getElementById("address"),
-                {
-                    componentRestrictions: { country: "us" },
-                    fields: ["address_components", "geometry", "icon", "name", "place_id"],
-                }
-            );
-
-            autocomplete.addListener("place_changed", onPlaceChanged);
-
-            console.log("intialized autocomplete");
-        }
-
-        function onPlaceChanged() {
-            var place = autocomplete.getPlace();
-
-            if (!place.geometry || !place.geometry.location) { // user did not select a prediction
-                document.getElementById("address").placeholder = 'Enter a place';
-                console.log("No details available for input: '" + place.name + "'");
-                return;
-            } 
-            
-            if (place.geometry.viewport) {
-                map.fitBounds(place.geometry.viewport);
-            } else {
-                document.getElementById("autocompleteDropdown").innerHTML = place.name;
-                console.log(place.geometry);
-
-                map.setCenter(place.geometry.location);
-                map.setZoom(15);
-            }
-
-            posMarker.setPosition(place.geometry.location);
-            posMarker.setVisible(true);
-        }
-
-        initMap();
-        initAutocomplete();
-
-    </script>
-
-
     <!-- Multi-stage form -->
     <form id="multi-stage-form">
-        <section class="form-section active">
-            <!-- Stage 1: Order -->
+        <section class="form-section section1 active">
+            <!-- Stage 1: Choose Restaurant -->
+            <div class="mapDiv">
+                <form id="addressForm" name="address">
+                    <label for="address">Address</label>
+                    <input type="text" class="mb-3" id="address" name="address" placeholder="Enter address" required>
+                    <p id="autocompleteDropdown"></p>
+                </form>
+        
+                <div id="map"></div>
+            </div>
+
+            <button type="button" class="btn btn-primary next">Next</button>
+        </section>
+
+        <section class="form-section">
+            <!-- Stage 2: Order -->
             <h2>Choose Your Order Items</h2>
             <div class="form-group">
                 <label for="meal">Select an item</label>
@@ -112,11 +38,12 @@
                     <option value="meal2">golem god</option>
                 </select>
             </div>
+            <button type="button" class="btn btn-primary prev">Previous</button>
             <button type="button" class="btn btn-primary next">Next</button>
         </section>
 
         <section class="form-section">
-            <!-- Stage 2: Personal Info -->
+            <!-- Stage 3: Personal Info -->
             <h2>Personal Information</h2>
             <div class="form-group">
                 <label for="name">Name</label>
@@ -139,7 +66,7 @@
         </section>
 
         <section class="form-section">
-            <!-- Stage 3: Additional Information -->
+            <!-- Stage 4: Additional Information -->
             <h2>Additional Information</h2>
             <div class="form-group">
                 <label for="special-requests">Special Requests:</label>
@@ -150,7 +77,7 @@
         </section>
 
         <section class="form-section">
-            <!-- Stage 4: Confirmation -->
+            <!-- Stage 5: Confirmation -->
             <h2>Confirmation</h2>
             <p>Please review your order details:</p>
             <!-- Display order summary here -->
@@ -213,5 +140,110 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Google Maps API Stuff -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc&libraries=places&callback=initAutocomplete"></script>
+<script>
+    (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+        key: "AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc",
+        v: "weekly",
+    });
+</script>
+
+<script>
+    let map; 
+    let autocomplete;
+    let posMarker;
+
+    async function initMap() {
+        const { Map } = await google.maps.importLibrary("maps");
+
+        map = new Map(document.getElementById("map"), {
+            center: { lat: 39.80, lng: -98.5556199 },
+            zoom: 4,
+            mapTypeId: 'roadmap',
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            fullscreenControl: false
+        });
+
+        posMarker = new google.maps.Marker({
+            map,
+            anchorPoint: new google.maps.Point(0, -29),
+        });
+        posMarker.setVisible(false);
+    }
+
+    function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById("address"),
+            {
+                componentRestrictions: { country: "us" },
+                fields: ["address_components", "geometry", "icon", "name", "place_id"],
+            }
+        );
+
+        autocomplete.addListener("place_changed", onPlaceChanged);
+    }
+
+    function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+
+        if (!place.geometry || !place.geometry.location) { // user did not select a prediction
+            document.getElementById("address").placeholder = 'Enter a place';
+            console.log("No details available for input: '" + place.name + "'");
+            return;
+        } 
+        
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            document.getElementById("autocompleteDropdown").innerHTML = place.name;
+
+            map.setCenter(place.geometry.location);
+            map.setZoom(15);
+        }
+        console.log(place);
+
+        posMarker.setPosition(place.geometry.location);
+        posMarker.setVisible(true);
+
+        findNearbyRestaurants(place.geometry.location);
+    }
+
+    function findNearbyRestaurants(location) {
+        service = new google.maps.places.PlacesService(map);
+        var request = {
+            location: location,
+            radius: '20000',
+            type: ['restaurant']
+            // type: ['restaurant', 'bar', 'bakery', 'cafe']
+        };
+
+        service.nearbySearch(request, nearbyRestaurantsFound);
+    }
+
+    function nearbyRestaurantsFound(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                console.log(results[i]);
+                addMarker(results[i]);
+            }
+        }
+    }
+
+    function addMarker(place) {
+        marker = new google.maps.Marker({
+            position: place.geometry.location,
+            map: map
+        });
+    }
+
+    initMap();
+    initAutocomplete();
+
+</script>
 
 {% endblock %}
