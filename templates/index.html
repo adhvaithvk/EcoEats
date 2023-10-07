@@ -10,17 +10,25 @@
     <h1>Welcome to EcoEats</h1>
     <p>Order your favorite eco-friendly meals today!</p>
 
-    <div class="test">
-        <div id="map"></div>
-
+    <div class="mapDiv">
         <form id="addressForm" name="address">
             <label for="address">Address</label>
             <input type="text" class="mb-3" id="address" name="address" placeholder="Enter address" required>
+            <p id="autocompleteDropdown"></p>
         </form>
+
+        <div id="map"></div>
     </div>
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc&callback=initMap"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc&libraries=places&callback=initAutocomplete"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc&libraries=places&callback=initAutocomplete"></script>
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: "AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc",
+            v: "weekly",
+            // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+            // Add other bootstrap parameters as needed, using camel case.
+        });
+    </script>
 
     <script>
         let map; 
@@ -31,8 +39,14 @@
             const { Map } = await google.maps.importLibrary("maps");
 
             map = new Map(document.getElementById("map"), {
-                center: { lat: -30.397, lng: 150.644 },
-                zoom: 8,
+                center: { lat: 39.80, lng: -98.5556199 },
+                zoom: 4,
+                mapTypeId: 'roadmap',
+                zoomControl: true,
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
             });
 
             posMarker = new google.maps.Marker({
@@ -52,6 +66,8 @@
             );
 
             autocomplete.addListener("place_changed", onPlaceChanged);
+
+            console.log("intialized autocomplete");
         }
 
         function onPlaceChanged() {
@@ -59,24 +75,26 @@
 
             if (!place.geometry || !place.geometry.location) { // user did not select a prediction
                 document.getElementById("address").placeholder = 'Enter a place';
-                window.alert("No details available for input: '" + place.name + "'");
+                console.log("No details available for input: '" + place.name + "'");
                 return;
             } 
             
-            // FIX MAP STUFF LATER
             if (place.geometry.viewport) {
                 map.fitBounds(place.geometry.viewport);
             } else {
-                // document.getElementById("details").innerHTML = place.name;
+                document.getElementById("autocompleteDropdown").innerHTML = place.name;
                 console.log(place.geometry);
 
                 map.setCenter(place.geometry.location);
-                map.setZoom(17);
+                map.setZoom(15);
             }
 
             posMarker.setPosition(place.geometry.location);
             posMarker.setVisible(true);
         }
+
+        initMap();
+        initAutocomplete();
 
     </script>
 
