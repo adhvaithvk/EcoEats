@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> EcoEats </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+
+
+<body>
+
+    <div class="page-wrapper">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">EcoEats</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Journey</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <p id="demo"></p>
+    <div id="svg_wrap"></div>
+    
+
+    <h1 id="welcomeMessage">Welcome to EcoEats! Order Here!</h1>
+    <section>
+    <p>Personal information</p>
+    <input type="text" placeholder="Firstname" />
+    <input type="text" placeholder="Surname" />
+    <input type="text" placeholder="Birthdate" />
+    <input type="text" placeholder="Insurance number" />
+    <input type="text" placeholder="Family status" /> 
+    </section>
+
+    <section>
+    <p>Choose the restaurant on the map below</p>
+    <input type="text" placeholder="ENTER MAP" />
+    <input type="text" placeholder="Address" />
+    <input type="text" placeholder="State" />
+    <input type="text" placeholder="Country" />
+    </section>
+
+    <section>
+    <p>Contact information</p>
+    <input type="text" placeholder="Email address" />
+    <input type="text" placeholder="Phone" />
+    <input type="text" placeholder="Mobile" />
+    </section>
+
+    <section>
+    <p>Application</p>
+    <input type="text" placeholder="Preferred entrance date" />
+    <input type="text" placeholder="Number of people" />
+    </section>
+
+    <section>
+    <p>General condtitions</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </section>
+
+    <div class="button" id="prev">&larr; Previous</div>
+    <div class="button" id="next">Next &rarr;</div>
+    <div class="button" id="submit">Agree and send application</div>
+
+
+
+<script>
+        
+    $( document ).ready(function() {
+
+        var base_color = "rgb(230,230,230)";
+        var active_color = "rgb(237, 40, 70)";
+        
+        
+        
+        var child = 1;
+        var length = $("section").length - 1;
+        $("#prev").addClass("disabled");
+        $("#submit").addClass("disabled");
+        
+        $("section").not("section:nth-of-type(1)").hide();
+        $("section").not("section:nth-of-type(1)").css('transform','translateX(100px)');
+        
+        var svgWidth = length * 200 + 24;
+        $("#svg_wrap").html(
+        '<svg version="1.1" id="svg_form_time" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 ' +
+            svgWidth +
+            ' 24" xml:space="preserve"></svg>'
+        );
+        
+    function makeSVG(tag, attrs) {
+      var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      for (var k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+    
+    for (i = 0; i < length; i++) {
+      var positionX = 12 + i * 200;
+      var rect = makeSVG("rect", { x: positionX, y: 9, width: 200, height: 6 });
+      document.getElementById("svg_form_time").appendChild(rect);
+      // <g><rect x="12" y="9" width="200" height="6"></rect></g>'
+      var circle = makeSVG("circle", {
+        cx: positionX,
+        cy: 12,
+        r: 12,
+        width: positionX,
+        height: 6
+      });
+      document.getElementById("svg_form_time").appendChild(circle);
+    }
+    
+    var circle = makeSVG("circle", {
+      cx: positionX + 200,
+      cy: 12,
+      r: 12,
+      width: positionX,
+      height: 6
+    });
+    document.getElementById("svg_form_time").appendChild(circle);
+    
+    $('#svg_form_time rect').css('fill',base_color);
+    $('#svg_form_time circle').css('fill',base_color);
+    $("circle:nth-of-type(1)").css("fill", active_color);
+    
+     
+    $(".button").click(function () {
+      $("#svg_form_time rect").css("fill", active_color);
+      $("#svg_form_time circle").css("fill", active_color);
+      var id = $(this).attr("id");
+      if (id == "next") {
+        $("#prev").removeClass("disabled");
+        if (child >= length) {
+          $(this).addClass("disabled");
+          $('#submit').removeClass("disabled");
+        }
+        if (child <= length) {
+          child++;
+        }
+      } else if (id == "prev") {
+        $("#next").removeClass("disabled");
+        $('#submit').addClass("disabled");
+        if (child <= 2) {
+          $(this).addClass("disabled");
+        }
+        if (child > 1) {
+          child--;
+        }
+      }
+      var circle_child = child + 1;
+      $("#svg_form_time rect:nth-of-type(n + " + child + ")").css(
+        "fill",
+        base_color
+      );
+      $("#svg_form_time circle:nth-of-type(n + " + circle_child + ")").css(
+        "fill",
+        base_color
+      );
+      var currentSection = $("section:nth-of-type(" + child + ")");
+      currentSection.fadeIn();
+      currentSection.css('transform','translateX(0)');
+     currentSection.prevAll('section').css('transform','translateX(-100px)');
+      currentSection.nextAll('section').css('transform','translateX(100px)');
+      $('section').not(currentSection).hide();
+    });
+    
+    });
+</script>
+
+
+
+
+</body>
+
+</html>
