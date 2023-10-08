@@ -109,6 +109,6 @@ margin-top:0;
   background-color: red;
 }
 
-#mapSection {
-  width: 500px;
+.otherSections{
+  max-width: 500px;
 }
