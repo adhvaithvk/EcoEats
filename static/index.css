@@ -19,6 +19,10 @@ body {
   user-select: none;
 }
 
+.navbar-brand {
+  padding-left: .3125rem;
+}
+
 h1 {
   font-weight:400;
   padding-top:0;
