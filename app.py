@@ -9,3 +9,7 @@ def login():
 @app.route("/index")
 def home_page():
     return render_template('index.html')
+
+@app.route("/journey")
+def journey():
+    return render_template('journey.html')
