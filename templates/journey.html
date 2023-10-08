@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> EcoEats </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- API Key: AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc -->
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: "AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc",
+            v: "weekly",
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXAyOiMguoCfaShMK7_tYexWPqPkWmCoc&libraries=places&callback=initAutocomplete"></script>
+
+</head>
+
+
+<body>
+    <div class="page-wrapper">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">EcoEats</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index">Order Food</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <p id="demo"></p>
+    <div id="svg_wrap"></div>
+
+    <h1 style='color:white;'>Our Mission</h1>
+
+    <section>
+       <h1> At EcoEats, </h1>
+       <br>
+       <h3> Our mission is to simplify sustainable dining by 
+        connecting you with nearby restaurants that prioritize eco-friendly 
+        practices, from using electric vehicles for deliveries to sourcing 
+        locally and reducing waste. We're dedicated to collaborating 
+        with restaurants committed to sustainability, 
+        ]assisting them in their journey to become environmentally 
+        responsible establishments. Our goal is to make conscious 
+        dining choices easy and convenient while contributing to a 
+        greener future for our planet and supporting local communities, 
+        which is why all our results are less than 15 miles away. </h3>
+    </section>
+
+    
+</body>
+
+
+</html>
