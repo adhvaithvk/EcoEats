@@ -329,8 +329,8 @@
             map.setCenter(place.geometry.location);
             map.setZoom(15);
         }
-        console.log("RESTAURANT");
-        console.log(place);
+        // console.log("RESTAURANT");
+        // console.log(place);
 
         homeLocation = place.geometry.location;
         $(".selectRestaurantDiv").show();
@@ -386,9 +386,8 @@
         selected = $("#availableRestaurants").val();
 
         // clear all other markers
-        for (let marker of restaurantMarkers) {
-            marker.setMap(null);
-        }
+        for (let marker of restaurantMarkers) { marker.setMap(null); }
+        posMarker.setMap(null);
 
         // find coords of restaurant
         let placeLocation;
