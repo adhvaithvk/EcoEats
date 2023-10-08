@@ -149,21 +149,21 @@
 
     <div class="button" id="prev">&larr; Previous</div>
     <div class="button" id="next">Next &rarr;</div>
-    <div class="button" id="submit" onclick="sendEmail()">Agree and Send Order</div>
+    <div class="button" id="submit" onclick="submitOrder()">Agree and Send Order</div>
 
 </body>
 
 <!-- Regular JS form stuff -->
 <script>
-    function sendEmail() {
+    function submitOrder() {
         for (var inputField of document.getElementsByClassName('form-control')) {
-            if ($(inputField).attr('id') == "delivAddress" || $(inputField).attr('id') == "special-requests") { continue; }
+            if ($(inputField).attr('id') == "special-requests") { continue; }
             if ($(inputField).val() == '') {
                 alert("Please fill out all fields before checking out");
                 return;
             }
         }
-        alert("Check the Cardholder's Email for your Order Confirmation & Tracking. Thank you for ordering from EcoEats!");
+        alert("Thank you for ordering from EcoEats!");
         fetch("/auth/logout");
     }
 </script>
