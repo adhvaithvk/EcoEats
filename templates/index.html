@@ -54,7 +54,9 @@
             </form>
     
             <div id="map"></div>
-            <div class="availibleRestaurants"></div>
+            <h3> Select a Restaurant Below! </h3>
+            <select class="availibleRestaurants"></select>
+            <!--<select id="dataDropdown"></select>-->
         </div>
     </section>
 
@@ -322,27 +324,42 @@
 
     function displayRestaurants() {
         for (let i = 0; i < restaurantData.length; i+=3) {
-            $(".availibleRestaurants").append(`<div class="row">`);
+            $(".availibleRestaurants").append(`<select class="row">`);
             for (let j = 0; j < 3; j++) {
                 restaurantIndex = i + j;
                 if (restaurantIndex >= restaurantData.length) { break; }
                 place = restaurantData[restaurantIndex];
 
                 $(".availibleRestaurants").append(`
-                <div class="col-3 restaurantOption">
+                <option class="col-3 restaurantOption">
                     <h4>${place.name}</h4>
-                </div>
+                </option>
                 `);
             }
 
-            $(".availibleRestaurants").append(`</div>`);
+            $(".availibleRestaurants").append(`</select>`);
         }
         
     }
 
-    function selectRestaurant() {
+    /*async function fetchDataAndPopulateDropdown() {
+        try {
+            const response = await fetch('restaurantData.length'); // Replace with your API endpoint
+            const data = await response.json();
 
-    }
+            const dropdown = document.getElementById('dataDropdown');
+
+            // Loop through the data and create option elements for the dropdown
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.value; // Set the value for the option
+                option.text = item.text;   // Set the text displayed in the option
+                dropdown.appendChild(option); // Append the option to the dropdown
+            });
+        } catch (error) {
+            console.error('Error fetching and populating data:', error);
+        }
+    }*/
 
     function getEcoDirections(startDestination, endDestination) {
         const directionsService = new google.maps.DirectionsService();
