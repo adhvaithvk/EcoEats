@@ -235,7 +235,8 @@
 <!-- Google Maps API Stuff -->
 <script>
     let map, autocomplete, posMarker;
-    let restaurantMarkers, restaurantData;
+    let restaurantMarkers = [];
+    let restaurantData = [];
 
     async function initMap() {
         const { Map } = await google.maps.importLibrary("maps");
@@ -324,8 +325,8 @@
             $(".availibleRestaurants").append(`<div class="row">`);
             for (let j = 0; j < 3; j++) {
                 restaurantIndex = i + j;
-                if (restaurantIndex >= restaurants.length) { break; }
-                place = restaurants[restaurantIndex];
+                if (restaurantIndex >= restaurantData.length) { break; }
+                place = restaurantData[restaurantIndex];
 
                 $(".availibleRestaurants").append(`
                 <div class="col-3 restaurantOption">
@@ -361,7 +362,7 @@
     }
 
     function calculateAndDisplayRoute() {
-        
+
     }
 
     function addMarker(place) {
