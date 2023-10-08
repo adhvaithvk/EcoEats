@@ -54,7 +54,8 @@
             </form>
     
             <div id="map"></div>
-            <div class="availibleRestaurants"></div>
+            <div class="availableRestaurants"></div>
+            <div id="directions-panel"></div>
         </div>
     </section>
 
@@ -322,47 +323,55 @@
 
     function displayRestaurants() {
         for (let i = 0; i < restaurantData.length; i+=3) {
-            $(".availibleRestaurants").append(`<div class="row">`);
+            $(".availableRestaurants").append(`<div class="row">`);
             for (let j = 0; j < 3; j++) {
                 restaurantIndex = i + j;
                 if (restaurantIndex >= restaurantData.length) { break; }
                 place = restaurantData[restaurantIndex];
 
-                $(".availibleRestaurants").append(`
+                $(".availableRestaurants").append(`
                 <div class="col-3 restaurantOption">
                     <h4>${place.name}</h4>
                 </div>
                 `);
             }
 
-            $(".availibleRestaurants").append(`</div>`);
+            $(".availableRestaurants").append(`</div>`);
         }
         
-    }
-
-    function selectRestaurant() {
-
     }
 
     function getEcoDirections(startDestination, endDestination) {
         const directionsService = new google.maps.DirectionsService();
         const directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
 
-        request = {
+        directionsService.route({
             origin: startDestination,
             destination: endDestination,
             travelMode: "DRIVING",
             unitSystem: google.maps.UnitSystem.IMPERIAL,
+            provideRouteAlternatives: true
+        })
+        .then((response) => {
+        directionsRenderer.setDirections(response);
+
+        const route = response.routes[0];
+        const summaryPanel = document.getElementById("directions-panel");
+
+        summaryPanel.innerHTML = "";
+        // For each route, display summary information.
+        for (let i = 0; i < route.legs.length; i++) {
+            const routeSegment = i + 1;
+
+            summaryPanel.innerHTML +=
+            "<b>Route Segment: " + routeSegment + "</b><br>";
+            summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+            summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+            summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
         }
-
-        directionsRenderer.setMap(map);
-        document.getElementById("submit").addEventListener("click", () => {
-            calculateAndDisplayRoute(directionsService, directionsRenderer);
-        });
-    }
-
-    function calculateAndDisplayRoute() {
-
+        })
+        .catch((e) => window.alert("Directions request failed due to " + status));
     }
 
     function addMarker(place) {
