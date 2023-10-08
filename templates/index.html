@@ -235,12 +235,9 @@
 
 <!-- Google Maps API Stuff -->
 <script>
-    let map; 
-    let autocomplete;
-    let posMarker;
+    let map, autocomplete, posMarker; 
 
     async function initMap() {
-        console.log('initMap');
         const { Map } = await google.maps.importLibrary("maps");
 
         map = new Map(document.getElementById("map"), {
@@ -284,6 +281,7 @@
         
         if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
+            map.setZoom(13);
         } else {
             document.getElementById("autocompleteDropdown").innerHTML = place.name;
 
@@ -302,9 +300,10 @@
         service = new google.maps.places.PlacesService(map);
         var request = {
             location: location,
-            radius: '20000',
+            radius: '16093', // 10 mile radius 
             type: ['restaurant']
         };
+        
 
         service.nearbySearch(request, nearbyRestaurantsFound);
     }
