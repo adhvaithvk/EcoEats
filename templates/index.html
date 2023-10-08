@@ -31,7 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/journey">Our Mission @ EcoEats</a>
+                        <a class="nav-link" href="/journey">Our Mission</a>
                     </li>
                 </ul>
             </div>
@@ -135,7 +135,7 @@
 
     <div class="button" id="prev">&larr; Previous</div>
     <div class="button" id="next">Next &rarr;</div>
-    <div class="button" id="submit">Agree and send application</div>
+    <div class="button" id="submit">Submit Order</div>
 
 </body>
 
@@ -312,7 +312,7 @@
         service = new google.maps.places.PlacesService(map);
         var request = {
             location: location,
-            radius: '11265', // 7 mile radius 
+            radius: '16093', // 10 mile radius 
             type: ['restaurant']
         };
         service.nearbySearch(request, nearbyRestaurantsFound);
@@ -406,6 +406,7 @@
     initMap();
     initAutocomplete();
     document.getElementById("availableRestaurants").addEventListener("change", getEcoDirections);
+    $(".selectRestaurantDiv").hide();
 
 </script>
 
