@@ -98,3 +98,11 @@ margin-top:0;
   height: 500px;
   width: auto;
 }
+
+.restaurantOption {
+  cursor: pointer;
+}
+
+.restaurantOption:hover {
+  background-color: red;
+}
