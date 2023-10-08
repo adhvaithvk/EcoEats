@@ -106,21 +106,22 @@
         </div>
         <div class="form-group">
             <label for="delivAddress">Delivery Address</label>
-            <input type="text" class="form-control" id="delivAddress" name="delivAddress" placeholder="Enter Address on First Page of Form" disabled required>
+            <input type="text" class="form-control" id="delivAddress" name="delivAddress" placeholder="Enter Address in first form section" disabled required>
         </div>
     </section>
 
     <!-- Stage 4: Confirmation -->
     <section class="otherSections">
-        <h2>Confirmation</h2>
-        <p>Please review your order details:</p>
-        <p> 1 - Burrito: $11.59 </p>
-        <p> 2 - Tax: 5% - $0.58 </p>
-        <p> 3 - Delivery: $5.50 </p>
-        <p> ________________________________________________ </p>
-        <p> Total: $17.67 </p>
-        <p> ________________________________________________ </p>
-        <!-- Display order summary here -->
+        <h2>Order Details</h2>
+
+        <!-- Display order summary -->
+        <p>Burrito: <span class="checkoutPrice">$11.59</span></p>
+        <p>Sales Tax (5%): <span class="checkoutPrice">+ $0.58</span></p>
+        <p>Delivery: <span class="checkoutPrice">+ $5.50</span></p>
+        <hr>
+        <p> Total: <span class="checkoutPrice">$17.67</span></p>
+        <hr>
+        <br>
 
         <!-- Payment -->
         <div class="form-group">
@@ -156,8 +157,6 @@
 <script>
     function sendEmail() {
         for (var inputField of document.getElementsByClassName('form-control')) {
-            console.log("value");
-            console.log($(inputField).val());
             if ($(inputField).attr('id') == "delivAddress" || $(inputField).attr('id') == "special-requests") { continue; }
             if ($(inputField).val() == '') {
                 alert("Please fill out all fields before checking out");
@@ -300,7 +299,7 @@
             document.getElementById("address"),
             {
                 componentRestrictions: { country: "us" },
-                fields: ["address_components", "geometry", "icon", "name", "place_id"],
+                fields: ["geometry", "icon", "name", "place_id"],
             }
         );
 
@@ -330,8 +329,7 @@
 
         homeLocation = place.geometry.location;
         $(".selectRestaurantDiv").show();
-        // request vicinity field when initially making autocomplete
-        $("#delivAddress").val(place.vicinity);
+        $("#delivAddress").val(place.name);
 
         posMarker.setPosition(place.geometry.location);
         posMarker.setVisible(true);
@@ -353,7 +351,7 @@
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             const allRestaurants = [];
             for (var i = 0; i < results.length; i++) {
-                console.log(results[i]);
+                // console.log(results[i]);
                 restaurantData.push(results[i]);
                 addMarker(results[i]);
             }
@@ -364,7 +362,6 @@
 
     function displayRestaurants() {
         for (let i = 0; i < restaurantData.length; i+=3) {
-            $("#availableRestaurants").append(`<select class="row">`);
             for (let j = 0; j < 3; j++) {
                 restaurantIndex = i + j;
                 if (restaurantIndex >= restaurantData.length) { break; }
@@ -376,10 +373,8 @@
                 </option>
                 `);
             }
-
-            $("#availableRestaurants").append(`</select>`);
         }
-        
+
     }
 
     function getEcoDirections(event) {
