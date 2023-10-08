@@ -7,8 +7,8 @@ html {
 
 body {
   background-image: url("bg.png");
-  background-size:cover;
-  background-repeat:repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
   text-align: center;
   font-family: 'Noto Sans', sans-serif;
   -webkit-touch-callout: none;
@@ -24,6 +24,11 @@ h1 {
   padding-top:0;
   margin-top:0;
   font-family: 'Roboto Slab', serif;
+}
+
+.navbar {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 #svg_form_time {
@@ -78,13 +83,13 @@ input {
   border-radius: 5px;
   border: 1px solid lightgrey;
   font-size: 1em;
-  font-family:inherit;
+  font-family: inherit;
   background:white;
 }
 
-p{
-  text-align:justify;
-margin-top:0;
+p {
+  text-align: justify;
+  margin-top:0;
 }
 
 #welcomeMessage {
