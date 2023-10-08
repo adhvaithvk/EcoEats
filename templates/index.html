@@ -49,15 +49,16 @@
     <!-- Multi-stage form -->
     <!-- Stage 1: Choose Restaurant -->
     <section>
+        <h2>Select a Restaurant</h2>
         <div class="mapDiv">
             <form id="addressForm" style="text-align: left;" name="address">
                 <label for="address">Delivery Address</label>
-                <input type="text" class="mb-3 form-control" id="address" name="address" placeholder="Enter address" required>
+                <input type="text" class="mb-3 form-control" id="address" name="address" placeholder="Enter Delivery Address" required>
                 <p class="container-md" id="autocompleteDropdown"></p>
             </form>
 
             <div style="text-align: left;" class="selectRestaurantDiv">
-                <label style="margin-top: 30px; margin-bottom: 50px;"> Select a Restaurant Below After Entering Your Address! </label> 
+                <label style="margin-top: 30px; margin-bottom: 50px;"> Select a Restaurant to Order From: </label> 
                 <select id="availableRestaurants"> <!-- blank until user enters address-->
                     <option class="restaurantOption"> </option>
                 </select>
@@ -341,7 +342,7 @@
         service = new google.maps.places.PlacesService(map);
         var request = {
             location: location,
-            radius: '11265', // 7 mile radius 
+            radius: '16093', // 10 mile radius 
             type: ['restaurant']
         };
         service.nearbySearch(request, nearbyRestaurantsFound);
