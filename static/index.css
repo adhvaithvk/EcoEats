@@ -7,8 +7,8 @@ html {
 
 body {
   background-image: url("bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-size:cover;
+  background-repeat:repeat;
   text-align: center;
   font-family: 'Noto Sans', sans-serif;
   -webkit-touch-callout: none;
@@ -24,11 +24,6 @@ h1 {
   padding-top:0;
   margin-top:0;
   font-family: 'Roboto Slab', serif;
-}
-
-.navbar {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 #svg_form_time {
@@ -65,10 +60,10 @@ section {
   max-width: 1000px;
   margin: 30px auto;
   background:white;
-  background:rgba(255,255,255,0.9);
+  background:rgba(189, 239, 224, 0.9);
   backdrop-filter:blur(10px);
   box-shadow:0px 2px 10px rgba(0,0,0,0.3);
-  border-radius:5px;
+  border-radius:25px;
   transition:transform 0.2s ease-in-out;
   width: 100%;
 }
@@ -83,13 +78,13 @@ input {
   border-radius: 5px;
   border: 1px solid lightgrey;
   font-size: 1em;
-  font-family: inherit;
+  font-family:inherit;
   background:white;
 }
 
-p {
-  text-align: justify;
-  margin-top:0;
+p{
+  text-align:justify;
+margin-top:0;
 }
 
 #welcomeMessage {
@@ -98,6 +93,8 @@ p {
 
 .mapDiv {
   min-height: 300px;
+  margin-bottom: 50px;
+  margin-right: 20px;
 }
 
 #map {
@@ -115,4 +112,12 @@ p {
 
 .otherSections{
   max-width: 500px;
+}
+
+label {
+  text-align: left;
+}
+
+.form-group {
+  text-align: left;
 }
