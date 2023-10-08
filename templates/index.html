@@ -57,8 +57,8 @@
                 <p class="container-md" id="autocompleteDropdown"></p>
             </form>
 
-            <div style="text-align: left;" class="selectRestaurantDiv">
-                <label style="margin-top: 30px; margin-bottom: 50px;"> Select a Restaurant to Order From: </label> 
+            <div style="text-align: left; margin-top: 30px; margin-bottom: 20px;" class="selectRestaurantDiv">
+                <label> Select a Restaurant to Order From: </label> 
                 <select id="availableRestaurants"> <!-- blank until user enters address-->
                     <option class="restaurantOption"> </option>
                 </select>
@@ -68,7 +68,6 @@
             <div id="map"></div>
 
             <div id="directions-panel"></div>
-            
             
         </div>
     </section>
@@ -274,6 +273,8 @@
     let map, autocomplete, posMarker, homeLocation;
     let restaurantMarkers = [], restaurantData = [], restaurantRoutes = [];
 
+    let directionsRenderer; // declare up here so only 1 route is shown at a time
+
     async function initMap() {
         const { Map } = await google.maps.importLibrary("maps");
 
@@ -293,6 +294,9 @@
             anchorPoint: new google.maps.Point(0, -29),
         });
         posMarker.setVisible(false);
+
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
     }
 
     function initAutocomplete() {
@@ -395,11 +399,9 @@
             }
         }
 
-        // route api
+        // create route on map
         const directionsService = new google.maps.DirectionsService();
-        const directionsRenderer = new google.maps.DirectionsRenderer();
-        directionsRenderer.setMap(map);
-
+        
         directionsService.route({
             origin: placeLocation,
             destination: homeLocation,
@@ -408,10 +410,10 @@
             provideRouteAlternatives: false
         })
         .then((response) => {
+            // console.log(response);
+
             directionsRenderer.setDirections(response);
-
-            console.log(response);
-
+            
             const route = response.routes[0];
             const summaryPanel = document.getElementById("directions-panel");
 
