@@ -164,7 +164,7 @@
             }
         }
         alert("Thank you for ordering from EcoEats!");
-        fetch("/auth/logout");
+        window.location = window.location.origin + "/auth/login"; // window resets to login page, which takes user back to order page
     }
 </script>
 
@@ -437,7 +437,6 @@
     $(".selectRestaurantDiv").hide();
 
 </script>
-
 
 
 </html>
