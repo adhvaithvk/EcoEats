@@ -39,13 +39,12 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         confirm = request.form['confirm-password']
-        
+
         if not username or not password:
             msg = "Not so easy, you need to fill the form."
         elif password != confirm:
             msg = "Passwords don't match"
         else:
             msg = create_account(username, password)
-            
+
         return render_template('login.html', error=msg)
-    

@@ -16,7 +16,6 @@ def login():
         return render_template('index.html')
     else:
         return redirect(url_for('auth.login_page'))
-        # return render_template('login.html')
 
 @app.route("/index")
 def home_page():

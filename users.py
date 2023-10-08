@@ -23,7 +23,7 @@ def create_account(username, password):
         sql.execute('''INSERT INTO users
         (username, password) VALUES
         (?, ?)''', [username, hashed])
-        
+
         connection.commit()
         return "Account created, you can login now"
 
