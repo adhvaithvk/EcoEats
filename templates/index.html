@@ -54,7 +54,8 @@
             </form>
     
             <div id="map"></div>
-            <div class="availableRestaurants"></div>
+            <h3> Select a Restaurant Below! </h3>
+            <select id="availableRestaurants"></select>
             <div id="directions-panel"></div>
         </div>
     </section>
@@ -235,7 +236,7 @@
 
 <!-- Google Maps API Stuff -->
 <script>
-    let map, autocomplete, posMarker;
+    let map, autocomplete, posMarker, homeLocation;
     let restaurantMarkers = [];
     let restaurantData = [];
 
@@ -292,6 +293,7 @@
         }
         console.log(place);
 
+        homeLocation = place.geometry.location;
         posMarker.setPosition(place.geometry.location);
         posMarker.setVisible(true);
 
@@ -323,32 +325,49 @@
 
     function displayRestaurants() {
         for (let i = 0; i < restaurantData.length; i+=3) {
-            $(".availableRestaurants").append(`<div class="row">`);
+            $("#availableRestaurants").append(`<select class="row">`);
             for (let j = 0; j < 3; j++) {
                 restaurantIndex = i + j;
                 if (restaurantIndex >= restaurantData.length) { break; }
                 place = restaurantData[restaurantIndex];
 
-                $(".availableRestaurants").append(`
-                <div class="col-3 restaurantOption">
+                $("#availableRestaurants").append(`
+                <option class="col-3 restaurantOption">
                     <h4>${place.name}</h4>
-                </div>
+                </option>
                 `);
             }
 
-            $(".availableRestaurants").append(`</div>`);
+            $("#availableRestaurants").append(`</select>`);
         }
         
     }
 
-    function getEcoDirections(startDestination, endDestination) {
+    function getEcoDirections(event) {
+        selected = $("#availableRestaurants").val();
+
+        // clear all other markers
+        for (let marker of restaurantMarkers) {
+            marker.setMap(null);
+        }
+
+        // find coords of restaurant
+        let placeLocation;
+        for (let restaurant of restaurantData) {
+            if (restaurant.name == selected){
+                placeLocation = restaurant.geometry.location;
+                break;
+            }
+        }
+
+        // route api
         const directionsService = new google.maps.DirectionsService();
         const directionsRenderer = new google.maps.DirectionsRenderer();
         directionsRenderer.setMap(map);
 
         directionsService.route({
-            origin: startDestination,
-            destination: endDestination,
+            origin: placeLocation,
+            destination: homeLocation,
             travelMode: "DRIVING",
             unitSystem: google.maps.UnitSystem.IMPERIAL,
             provideRouteAlternatives: true
@@ -384,6 +403,7 @@
 
     initMap();
     initAutocomplete();
+    document.getElementById("availableRestaurants").addEventListener("change", getEcoDirections);
 
 </script>
 
