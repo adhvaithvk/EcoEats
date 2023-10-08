@@ -56,14 +56,12 @@
             <div id="map"></div>
             
             <div class="selectRestaurantDiv">
-                <h3> Select a Restaurant Below! </h3> 
+                <h3 style="margin-top: 30px"> Select a Restaurant Below! </h3> 
                 <select id="availableRestaurants"> <!-- blank until user enters address-->
                     <option class="restaurantOption"> </option>
                 </select>
                 <div id="directions-panel"></div>
             </div>
-            
-
         </div>
     </section>
 
@@ -72,16 +70,14 @@
         <h2>Choose Your Order Items</h2>
         <div class="form-group">
             <label for="meal">Select an item</label>
-            <select class="form-control" id="meal" name="meal" required>
-                <option value="meal1">nathan lu</option>
-                <option value="meal2">playboi parthy</option>
-                <option value="meal2">golem god</option>
+            <select class="form-control" id="meal" name="meal" required disabled>
+                <option value="meal1">Lettuce</option>
             </select>
         </div>
 
-        <h2>Additional Information</h2>
+        <h2 style="margin-top: 30px">Additional Order Information</h2>
         <div class="form-group">
-            <label for="special-requests">Special Requests:</label>
+            <label for="special-requests">Enter Special Requests:</label>
             <textarea class="form-control" id="special-requests" name="special-requests"></textarea>
         </div>
     </section>
@@ -91,19 +87,19 @@
         <h2>Personal Information</h2>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name Here" required>
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" required>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone Number Here" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" required>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email Here" required>
         </div>
         <div class="form-group">
             <label for="delivAddress">Delivery Address</label>
-            <input type="text" class="form-control" id="delivAddress" name="delivAddress" required>
+            <input type="text" class="form-control" id="delivAddress" name="delivAddress" placeholder="Enter Address on First Page of Form" disabled required>
         </div>
     </section>
 
@@ -298,10 +294,13 @@
             map.setCenter(place.geometry.location);
             map.setZoom(15);
         }
+        console.log("RESTAURANT");
         console.log(place);
 
         homeLocation = place.geometry.location;
         $(".selectRestaurantDiv").show();
+        // request vicinity field when initially making autocomplete
+        $("#delivAddress").val(place.vicinity);
 
         posMarker.setPosition(place.geometry.location);
         posMarker.setVisible(true);
@@ -377,26 +376,21 @@
             destination: homeLocation,
             travelMode: "DRIVING",
             unitSystem: google.maps.UnitSystem.IMPERIAL,
-            provideRouteAlternatives: true
+            provideRouteAlternatives: false
         })
         .then((response) => {
-        directionsRenderer.setDirections(response);
+            directionsRenderer.setDirections(response);
 
-        const route = response.routes[0];
-        const summaryPanel = document.getElementById("directions-panel");
+            console.log(response);
 
-        summaryPanel.innerHTML = "";
-        // For each route, display summary information.
-        for (let i = 0; i < route.legs.length; i++) {
-            const routeSegment = i + 1;
+            const route = response.routes[0];
+            const summaryPanel = document.getElementById("directions-panel");
 
-            summaryPanel.innerHTML +=
-            "<b>Route Segment: " + routeSegment + "</b><br>";
-            summaryPanel.innerHTML += route.legs[i].start_address + " to ";
-            summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
-            summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
-        }
-        }).catch((e) => console.log("Directions request failed due to " + status));
+            // Display summary information
+            summaryPanel.innerHTML = "<h5 style='margin-top: 20px'><b>Route Summary</b><h5>";
+            summaryPanel.innerHTML += "Travel Distance: <b>" + route.legs[0].distance.text + "</b><br>";
+            summaryPanel.innerHTML += "Travel Duration: <b>" + route.legs[0].duration.text + "</b><br>";
+        })
     }
 
     function addMarker(place) {
