@@ -3,7 +3,7 @@ from auth import auth_bp
 from users import create_table
 
 app = Flask(__name__)
-app.secret_key = "14D7FD24939EEBCE"
+app.secret_key = [REDACTED]
 
 app.register_blueprint(auth_bp, url_prefix="/auth")
 
